@@ -6,8 +6,8 @@ public class DoorHandler : MonoBehaviour
     private Animator anim;
     private AudioSource audioPlayer;
     [Header("AudioClips")]
-    [SerializeField, Required] private AudioClip doorOpenAudio;
-    [SerializeField, Required] private AudioClip doorLockedAudio;
+    [SerializeField] private AudioClip [] doorOpenAudio;
+    [SerializeField] private AudioClip [] doorLockedAudio;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,13 +21,13 @@ public class DoorHandler : MonoBehaviour
         {
             if (collision.GetComponent<Collider2D>())
             {
-                audioPlayer.clip = doorOpenAudio;
+                audioPlayer.clip = doorOpenAudio[Random.Range(0, doorOpenAudio.Length)];
                 audioPlayer.Play();
                 anim.SetBool("IsOpen", true);
             }
             else
             {
-                audioPlayer.clip = doorLockedAudio;
+                audioPlayer.clip = doorLockedAudio[Random.Range(0, doorLockedAudio.Length)];
                 audioPlayer.Play();
             }
         }
