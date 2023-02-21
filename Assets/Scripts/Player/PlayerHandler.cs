@@ -14,7 +14,9 @@ public class PlayerHandler : MonoBehaviour
 
     [ShowNonSerializedField] private Vector3 recentSpawnPoint;
     [SerializeField] private string gameOverSceneName;
-    
+    [ShowNonSerializedField] private int numberOfBlueKeys;
+    [ShowNonSerializedField] private int numberOfOrangeKeys;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,8 +53,13 @@ public class PlayerHandler : MonoBehaviour
         SceneManager.LoadScene(gameOverSceneName, LoadSceneMode.Single);
     }
 
-    private void SetSpawnPoint(Transform position)
-    {
-        recentSpawnPoint = position.position;
-    }
+    private void SetSpawnPoint(Transform position) { recentSpawnPoint = position.position; } // Spawn Point Setter
+
+    public void SetBlueKeys(int blueKeysToAdd) { numberOfBlueKeys += blueKeysToAdd; } // Blue Setter
+
+    public int GetNumbBlueKeys() { return numberOfBlueKeys; } // Blue Getter
+
+    public void SetOrangeKeys( int orangeKeysToAdd) { numberOfOrangeKeys += orangeKeysToAdd; } // Orange Setter
+    public int GetNumbOrangeKeys() { return numberOfOrangeKeys; } // Orange Getter
+
 }
