@@ -10,7 +10,7 @@ public class DoorHandler : MonoBehaviour
     [SerializeField] private AudioClip [] doorLockedAudio;
     [Header("Colliders")]
     [SerializeField] private BoxCollider2D triggerCollider;
-    [SerializeField] private BoxCollider2D boxCollider2D;
+    [SerializeField] private GameObject boxCollider2D;
     [SerializeField] private bool isBlueDoor;
     [SerializeField] private bool isSideDoor;
     [SerializeField] private int keysRequiredToOpen;
@@ -21,7 +21,7 @@ public class DoorHandler : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         audioPlayer = GetComponent<AudioSource>();
         triggerCollider.enabled = true;
-        boxCollider2D.enabled = true;
+        boxCollider2D.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +37,7 @@ public class DoorHandler : MonoBehaviour
                     anim.SetBool("IsOpen", true);
                     PlayerHandler._PlayerHandlerInstance.SetBlueKeys(-keysRequiredToOpen);
                     triggerCollider.enabled = false;
-                    boxCollider2D.enabled = false;
+                    boxCollider2D.SetActive(false);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ public class DoorHandler : MonoBehaviour
                     anim.SetBool("IsOpen", true);
                     PlayerHandler._PlayerHandlerInstance.SetOrangeKeys(-keysRequiredToOpen);
                     triggerCollider.enabled = false;
-                    boxCollider2D.enabled = false;
+                    boxCollider2D.SetActive(false);
                 }
                 else
                 {
@@ -63,10 +63,5 @@ public class DoorHandler : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        // Enable collider
     }
 }
