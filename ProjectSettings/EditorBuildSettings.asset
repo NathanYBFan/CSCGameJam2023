@@ -14,10 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels.unity
     guid: 3c4acab3d2419bd489f02dac1d49fdd6
-  - enabled: 1
-    path: Assets/Scenes/New Levels.unity
-    guid: 10fa744ac61b5de4eb07eca8a46f7c68
-  - enabled: 1
-    path: Assets/Scenes/NathanTest.unity
-    guid: 1ebf7f8c3dcc65640ad927687c5aa198
   m_configObjects: {}

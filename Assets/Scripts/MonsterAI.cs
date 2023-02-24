@@ -25,7 +25,6 @@ public class MonsterAI : MonoBehaviour
     }
     
     //public variables
-    public GameObject player;
     public Transform[] waypoints;
     public LayerMask wallMask;
 
@@ -75,7 +74,7 @@ public class MonsterAI : MonoBehaviour
 
     void CalculateAI() 
     {
-        float distFromPlayer = (player.transform.position - transform.position).magnitude;
+        float distFromPlayer = (PlayerHandler._PlayerHandlerInstance.transform.position - transform.position).magnitude;
 
         if(currentState.Equals(State.FAR_PATROL)) //FAR PATROL
         {
@@ -112,7 +111,7 @@ public class MonsterAI : MonoBehaviour
         {
             if (GetDistFromPlayer() <= CHASE_THRESH)
             {
-                lastSeenPlayer = player.transform.position;
+                lastSeenPlayer = PlayerHandler._PlayerHandlerInstance.transform.position;
                 lastTimePlayerSeenOrTeleported = Time.time;
             }
 
@@ -247,7 +246,7 @@ public class MonsterAI : MonoBehaviour
 
     int GetWaypointClosestToPlayer() //will be used for pathfinding likely, don't need rn though.
     {
-        return GetWaypointClosestToPoint(player.transform);
+        return GetWaypointClosestToPoint(PlayerHandler._PlayerHandlerInstance.transform);
     } //GetWaypointClosestToPlayer
 
     int GetWaypointClosestToSelf()
@@ -276,7 +275,7 @@ public class MonsterAI : MonoBehaviour
 
     float GetDistFromPlayer()
     {
-        return (this.transform.position - player.transform.position).magnitude;
+        return (this.transform.position - PlayerHandler._PlayerHandlerInstance.transform.position).magnitude;
     }
 
     float GetDistFromPoint(Transform point)
@@ -313,7 +312,7 @@ public class MonsterAI : MonoBehaviour
         do
         {
             wp = Random.Range(0, waypoints.Length);
-            destinationDistFromPlayer = Vector3.Distance(player.transform.position, waypoints[wp].position);
+            destinationDistFromPlayer = Vector3.Distance(PlayerHandler._PlayerHandlerInstance.transform.position, waypoints[wp].position);
 
         } while (destinationDistFromPlayer < FAR_TELEPORT_THRESH);
 

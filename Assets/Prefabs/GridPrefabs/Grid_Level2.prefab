@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 1243229946028880044}
   - component: {fileID: 3383759549469177055}
   - component: {fileID: 134440101233584133}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Walls (Collision)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
