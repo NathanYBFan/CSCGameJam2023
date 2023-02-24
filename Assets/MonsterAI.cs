@@ -14,6 +14,8 @@ public class MonsterAI : MonoBehaviour
     private const float ENEMY_SPEED_CLOSE = 4;
     private const float ENEMY_SPEED_FAR = 10; //goes faster when not close to the player
     private const float ENEMY_SPEED_CHASE = 2;
+    private const float FAR_TELEPORT_THRESH = 10;
+    private const float TELEPORT_TIMER = 10;
     private enum State
     {
         START,
@@ -32,8 +34,8 @@ public class MonsterAI : MonoBehaviour
     private State currentState = State.START;
     private int nextWaypoint;
     private Vector3 lastSeenPlayer;
-    private float teleportTimer = 20; // TODO: implement the teleport timer
-    private float timeSincePlayerSeen = 0;
+    private float timeSincePlayerSeenOrTeleported = 0; //for teleporting
+    private float lastTimePlayerSeenOrTeleported = 0; //for teleporting
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +79,15 @@ public class MonsterAI : MonoBehaviour
 
         if(currentState.Equals(State.FAR_PATROL)) //FAR PATROL
         {
+            if (timeSincePlayerSeenOrTeleported >= TELEPORT_TIMER)
+            {
+                TeleportToRandomWaypointAwayFromPlayer();
+                lastTimePlayerSeenOrTeleported = Time.time;
+                //maybe need to the "timesinceplayerseenorteleported" calculation here, check this first if teleporting around randomly
+                //its at the bottom of the update method
+            }
+
+
             float distToNextWaypoint = (waypoints[nextWaypoint].position - transform.position).magnitude;
 
             if(distToNextWaypoint < AT_POINT_THRESH)
@@ -102,6 +113,7 @@ public class MonsterAI : MonoBehaviour
             if (GetDistFromPlayer() <= CHASE_THRESH)
             {
                 lastSeenPlayer = player.transform.position;
+                lastTimePlayerSeenOrTeleported = Time.time;
             }
 
             ChaseLastSeenPlayerLocation();
@@ -111,6 +123,8 @@ public class MonsterAI : MonoBehaviour
         {
             //shit broken if this happens
         }
+
+        timeSincePlayerSeenOrTeleported = Time.time - lastTimePlayerSeenOrTeleported;
     } //CalculateAI
 
     void RecalculateState()
@@ -143,7 +157,7 @@ public class MonsterAI : MonoBehaviour
             if(GetDistFromPoint(lastSeenPlayer) < AT_POINT_THRESH)
             {
                 //TODO: add teleport for here i think
-                TeleportToRandomWaypoint();
+                TeleportToRandomWaypointAwayFromPlayer();
                 currentState = State.FAR_PATROL;
                 //currentState = State.CLOSE_PATROL;
             }
@@ -284,10 +298,25 @@ public class MonsterAI : MonoBehaviour
         transform.position += dir * ENEMY_SPEED_CHASE * Time.deltaTime;
     }
 
-    void TeleportToRandomWaypoint() //TODO: change to be a point away from the player
+    void TeleportToRandomWaypoint() // OBSOLETE
     {
         int wp = Random.Range(0, waypoints.Length);
         this.transform.position = waypoints[wp].position;
         nextWaypoint = wp;
+    }
+
+    void TeleportToRandomWaypointAwayFromPlayer()
+    {
+        float destinationDistFromPlayer = 0;
+        int wp = 0;
+
+        do
+        {
+            wp = Random.Range(0, waypoints.Length);
+            destinationDistFromPlayer = Vector3.Distance(player.transform.position, waypoints[wp].position);
+
+        } while (destinationDistFromPlayer < FAR_TELEPORT_THRESH);
+
+        this.transform.position = waypoints[wp].position;
     }
 }
