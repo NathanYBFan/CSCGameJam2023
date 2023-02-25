@@ -12,8 +12,8 @@ public class MonsterAI : MonoBehaviour
     private const float FAR_PATROL_THRESH = 7; //threshold for far patrolling vs close patrolling
     private const float AT_POINT_THRESH = 0.1f;
     private const float ENEMY_SPEED_CLOSE = 4;
-    private const float ENEMY_SPEED_FAR = 10; //goes faster when not close to the player
-    private const float ENEMY_SPEED_CHASE = 2;
+    private const float ENEMY_SPEED_FAR = 6; //goes faster when not close to the player
+    private const float ENEMY_SPEED_CHASE = 1.5f;
     private const float FAR_TELEPORT_THRESH = 7;
     private const float TELEPORT_TIMER = 10;
     private enum State
