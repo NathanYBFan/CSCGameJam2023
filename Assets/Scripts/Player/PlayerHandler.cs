@@ -53,7 +53,7 @@ public class PlayerHandler : MonoBehaviour
         SceneManager.LoadScene(gameOverSceneName, LoadSceneMode.Single);
     }
 
-    private void SetSpawnPoint(Transform position) { recentSpawnPoint = position.position; } // Spawn Point Setter
+    public void SetSpawnPoint(Transform position) { recentSpawnPoint = position.position; } // Spawn Point Setter
 
     public void SetBlueKeys(int blueKeysToAdd) { numberOfBlueKeys += blueKeysToAdd; } // Blue Setter
 
