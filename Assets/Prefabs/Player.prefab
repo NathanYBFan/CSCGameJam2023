@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 6792696598485144728}
   _playerInput: {fileID: 6792696598485144729}
-  playerMaxLives: 3
+  playerMaxLives: 5
   gameOverSceneName: MainMenu
 --- !u!114 &6792696598485144729
 MonoBehaviour:
@@ -308,6 +308,8 @@ MonoBehaviour:
   m_Rigidbody2D: {fileID: 6792696598485144735}
   playerAnimator: {fileID: 6097836427833849282}
   m_MovementSmoothing: 0.05
+  audioPlayer: {fileID: 360922752944282956}
+  footsteps: {fileID: 8300000, guid: d5023beb13cee5941b9d1496dac4ca0d, type: 3}
   canMove: 1
 --- !u!50 &6792696598485144735
 Rigidbody2D:

@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class LevelTimer : MonoBehaviour
 {
     public static LevelTimer _LevelTimerInstance { get; private set; }
     [SerializeField] private float levelTime = 30;
+    [SerializeField] private TextMeshProUGUI timeText;
     private Slider timerBar;
 
     private float timeStart;
@@ -30,7 +29,6 @@ public class LevelTimer : MonoBehaviour
         {
             KillPlayer();
             ResetTime();
-            //StopLevelTimer();
         }
         else
         {
@@ -68,7 +66,7 @@ public class LevelTimer : MonoBehaviour
         {
             img.enabled = false;
         }
-
+        timeText.enabled = false;
         timerBar.enabled = false;
         this.enabled = false;
     }
@@ -81,7 +79,7 @@ public class LevelTimer : MonoBehaviour
         {
             img.enabled = true;
         }
-
+        timeText.enabled = true;
         timerBar.enabled = true;
         this.enabled = true;
         levelTime = timeToStart;

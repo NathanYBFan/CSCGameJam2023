@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6379366589014838277}
   - component: {fileID: -8878347773680119466}
   - component: {fileID: 2287896252167216758}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: OrangeDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,6 +207,7 @@ MonoBehaviour:
   isBlueDoor: 0
   isSideDoor: 0
   keysRequiredToOpen: 1
+  timeForTimer: 90
 --- !u!61 &-8878347773680119466
 BoxCollider2D:
   m_ObjectHideFlags: 0

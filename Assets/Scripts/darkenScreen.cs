@@ -22,6 +22,11 @@ public class darkenScreen : MonoBehaviour
             StartCoroutine(LerpLightingUp(0.5f));
         }
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+            global2DLight.intensity = darkIntensity;
+    }
 
     public IEnumerator LerpLightingUp(float targetIntensity)
     {

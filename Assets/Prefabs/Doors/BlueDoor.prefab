@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 7665481767447936013}
   - component: {fileID: 4527129350903596213}
   - component: {fileID: 7902899838142165287}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BlueDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,6 +192,7 @@ MonoBehaviour:
   isBlueDoor: 1
   isSideDoor: 0
   keysRequiredToOpen: 1
+  timeForTimer: 0
 --- !u!82 &4527129350903596213
 AudioSource:
   m_ObjectHideFlags: 0

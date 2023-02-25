@@ -25,26 +25,41 @@ public class AudioSettings : MonoBehaviour
     public void MasterVolumeChanged()
     {
         PlayerPrefs.SetFloat("masterVolume", masterVolumeSlider.value);
-        audioMixer.SetFloat("Master", Mathf.Log(masterVolumeSlider.value) * 20f);
+        if (Mathf.Log(masterVolumeSlider.value) * 20f == Mathf.NegativeInfinity)
+            audioMixer.SetFloat("Master", -80f);
+        else
+            audioMixer.SetFloat("Master", Mathf.Log(masterVolumeSlider.value) * 20f);
     }
     public void MusicVolumeChanged()
     {
         PlayerPrefs.SetFloat("musicVolume", musicVolumeSlider.value);
-        audioMixer.SetFloat("Music", Mathf.Log(musicVolumeSlider.value) * 20f);
+        if (Mathf.Log(musicVolumeSlider.value) * 20f == Mathf.NegativeInfinity)
+            audioMixer.SetFloat("Music", -80f);
+        else
+            audioMixer.SetFloat("Music", Mathf.Log(musicVolumeSlider.value) * 20f);
     }
     public void PlayerVolumeChanged()
     {
         PlayerPrefs.SetFloat("playerVolume", playerVolumeSlider.value);
-        audioMixer.SetFloat("Player", Mathf.Log(playerVolumeSlider.value) * 20f);
+        if (Mathf.Log(playerVolumeSlider.value) * 20f == Mathf.NegativeInfinity)
+            audioMixer.SetFloat("Player", -80f);
+        else
+            audioMixer.SetFloat("Player", Mathf.Log(playerVolumeSlider.value) * 20f);
     }
     public void EnemyVolumeChanged()
     {
         PlayerPrefs.SetFloat("enemyVolume", enemyVolumeSlider.value);
-        audioMixer.SetFloat("Enemy", Mathf.Log(enemyVolumeSlider.value) * 20f);
+        if (Mathf.Log(enemyVolumeSlider.value) * 20f == Mathf.NegativeInfinity)
+            audioMixer.SetFloat("Enemy", -80f);
+        else
+            audioMixer.SetFloat("Enemy", Mathf.Log(enemyVolumeSlider.value) * 20f);
     }
     public void SystemVolumeChanged()
     {
         PlayerPrefs.SetFloat("systemVolume", systemVolumeSlider.value);
-        audioMixer.SetFloat("System", Mathf.Log(systemVolumeSlider.value) * 20f);
+        if (Mathf.Log(systemVolumeSlider.value) * 20f == Mathf.NegativeInfinity)
+            audioMixer.SetFloat("System", -80f);
+        else
+            audioMixer.SetFloat("System", Mathf.Log(systemVolumeSlider.value) * 20f);
     }
 }

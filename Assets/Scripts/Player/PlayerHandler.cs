@@ -62,4 +62,5 @@ public class PlayerHandler : MonoBehaviour
     public void SetOrangeKeys( int orangeKeysToAdd) { numberOfOrangeKeys += orangeKeysToAdd; } // Orange Setter
     public int GetNumbOrangeKeys() { return numberOfOrangeKeys; } // Orange Getter
 
+    public void HealPlayer() { playerLivesLeft = playerMaxLives; }
 }
