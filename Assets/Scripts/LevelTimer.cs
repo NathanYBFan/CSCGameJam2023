@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class LevelTimer : MonoBehaviour
 {
-
+    public static LevelTimer _LevelTimerInstance { get; private set; }
     [SerializeField] private float levelTime = 30;
-    [SerializeField] private Slider timerBar;
-    [SerializeField] private GameObject player;
+    private Slider timerBar;
 
     private float timeStart;
 
@@ -16,6 +15,12 @@ public class LevelTimer : MonoBehaviour
     void Start()
     {
         timeStart = Time.time;
+        timerBar = GetComponent<Slider>();
+
+        if (_LevelTimerInstance != null && _LevelTimerInstance != this)
+            Destroy(this);
+        else
+            _LevelTimerInstance = this;
     }
 
     // Update is called once per frame
@@ -25,7 +30,7 @@ public class LevelTimer : MonoBehaviour
         {
             KillPlayer();
             ResetTime();
-            StopLevelTimer();
+            //StopLevelTimer();
         }
         else
         {
@@ -47,7 +52,7 @@ public class LevelTimer : MonoBehaviour
 
     private void KillPlayer()
     {
-        //add code to kill the player here, not sure if there's a public method that does that.
+        PlayerHandler._PlayerHandlerInstance.PlayerIsDead();
     }
 
     private void ResetTime()
@@ -67,5 +72,19 @@ public class LevelTimer : MonoBehaviour
         timerBar.enabled = false;
         this.enabled = false;
     }
-    
+
+    public void StartLevelTimer (float timeToStart)
+    {
+        Image[] imgs;
+        imgs = timerBar.GetComponentsInChildren<Image>();
+        foreach (Image img in imgs)
+        {
+            img.enabled = true;
+        }
+
+        timerBar.enabled = true;
+        this.enabled = true;
+        levelTime = timeToStart;
+        ResetTime();
+    }
 }

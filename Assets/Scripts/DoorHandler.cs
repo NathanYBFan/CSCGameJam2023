@@ -14,6 +14,7 @@ public class DoorHandler : MonoBehaviour
     [SerializeField] private bool isBlueDoor;
     [SerializeField] private bool isSideDoor;
     [SerializeField] private int keysRequiredToOpen;
+    [SerializeField] private float timeForTimer;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,6 +36,8 @@ public class DoorHandler : MonoBehaviour
                     audioPlayer.clip = doorOpenAudio[Random.Range(0, doorOpenAudio.Length - 1)];
                     audioPlayer.Play();
                     anim.SetBool("IsOpen", true);
+                    if (LevelTimer._LevelTimerInstance.isActiveAndEnabled)
+                        LevelTimer._LevelTimerInstance.StopLevelTimer();
                     PlayerHandler._PlayerHandlerInstance.SetBlueKeys(-keysRequiredToOpen);
                     triggerCollider.enabled = false;
                     boxCollider2D.SetActive(false);
@@ -52,6 +55,7 @@ public class DoorHandler : MonoBehaviour
                     audioPlayer.clip = doorOpenAudio[Random.Range(0, doorOpenAudio.Length - 1)];
                     audioPlayer.Play();
                     anim.SetBool("IsOpen", true);
+                    LevelTimer._LevelTimerInstance.StartLevelTimer(timeForTimer);
                     PlayerHandler._PlayerHandlerInstance.SetOrangeKeys(-keysRequiredToOpen);
                     triggerCollider.enabled = false;
                     boxCollider2D.SetActive(false);
