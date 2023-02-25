@@ -9,12 +9,12 @@ public class MonsterAI : MonoBehaviour
     //constants
     private const float CHASE_THRESH = 4; //threshold for chasing vs close patrolling
     private const float MAX_WAYPOINT_DIST = 6; //for generating the graph,  maximum dist between two waypoints
-    private const float FAR_PATROL_THRESH = 8; //threshold for far patrolling vs close patrolling
+    private const float FAR_PATROL_THRESH = 7; //threshold for far patrolling vs close patrolling
     private const float AT_POINT_THRESH = 0.1f;
     private const float ENEMY_SPEED_CLOSE = 4;
     private const float ENEMY_SPEED_FAR = 10; //goes faster when not close to the player
     private const float ENEMY_SPEED_CHASE = 2;
-    private const float FAR_TELEPORT_THRESH = 10;
+    private const float FAR_TELEPORT_THRESH = 7;
     private const float TELEPORT_TIMER = 10;
     private enum State
     {
@@ -35,10 +35,13 @@ public class MonsterAI : MonoBehaviour
     private Vector3 lastSeenPlayer;
     private float timeSincePlayerSeenOrTeleported = 0; //for teleporting
     private float lastTimePlayerSeenOrTeleported = 0; //for teleporting
+    private AudioSource monsterAudio;
+    [SerializeField] private AudioClip jumpScare;
 
     // Start is called before the first frame update
     void Start()
     {
+        monsterAudio = GetComponent<AudioSource>();
         GenerateGraph();
     } //Start
 
@@ -146,9 +149,10 @@ public class MonsterAI : MonoBehaviour
             {
                 currentState = State.FAR_PATROL;
             }
-            else if(GetDistFromPlayer() < CHASE_THRESH)
+            else if(GetDistFromPlayer() < CHASE_THRESH && !Physics2D.Raycast(transform.position, (PlayerHandler._PlayerHandlerInstance.transform.position - transform.position), GetDistFromPlayer(), wallMask))
             {
                 currentState = State.CHASING;
+                monsterAudio.PlayOneShot(jumpScare);
             }
         }
         else if (currentState.Equals(State.CHASING))
@@ -308,16 +312,31 @@ public class MonsterAI : MonoBehaviour
     void TeleportToRandomWaypointAwayFromPlayer()
     {
         float destinationDistFromPlayer = 0;
-        int wp = 0;
+        int wp;
+        int timeOut = 0;
 
         do
         {
             wp = Random.Range(0, waypoints.Length);
             destinationDistFromPlayer = Vector3.Distance(PlayerHandler._PlayerHandlerInstance.transform.position, waypoints[wp].position);
+            timeOut++;
+            if (timeOut > 300) //if we do too many things or its broken, don't go infinite
+                break;
 
         } while (destinationDistFromPlayer < FAR_TELEPORT_THRESH);
 
         this.transform.position = waypoints[wp].position;
         nextWaypoint = wp;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerHandler._PlayerHandlerInstance.PlayerIsDead();
+            TeleportToRandomWaypointAwayFromPlayer();
+            currentState = State.FAR_PATROL;
+
+        }
     }
 }
