@@ -23,7 +23,7 @@ public class Checkpoint : MonoBehaviour
 
             if (isEnd)
             {
-                SceneManager.LoadScene("MainMenu"); //change to be win screen
+                SceneManager.LoadScene("MainMenu", LoadSceneMode.Single); //change to be win screen
             }
         }
     }
