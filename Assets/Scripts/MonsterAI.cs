@@ -8,9 +8,9 @@ public class MonsterAI : MonoBehaviour
 
     //constants
     private const float CHASE_THRESH = 4; //threshold for chasing vs close patrolling
-    private const float MAX_WAYPOINT_DIST = 10; //for generating the graph,  maximum dist between two waypoints
-    private const float FAR_PATROL_THRESH = 7; //threshold for far patrolling vs close patrolling
-    private const float AT_POINT_THRESH = 0.2f;
+    private const float MAX_WAYPOINT_DIST = 6; //for generating the graph,  maximum dist between two waypoints
+    private const float FAR_PATROL_THRESH = 8; //threshold for far patrolling vs close patrolling
+    private const float AT_POINT_THRESH = 0.1f;
     private const float ENEMY_SPEED_CLOSE = 4;
     private const float ENEMY_SPEED_FAR = 10; //goes faster when not close to the player
     private const float ENEMY_SPEED_CHASE = 2;
@@ -57,7 +57,7 @@ public class MonsterAI : MonoBehaviour
         {
             for(int j = 0; j < waypoints.Length; j++)
             {
-                if(i != j && !Physics2D.Raycast(waypoints[i].position, waypoints[j].position, MAX_WAYPOINT_DIST, wallMask))
+                if(i != j && !Physics2D.Raycast(waypoints[i].position, (waypoints[j].position-waypoints[i].position), Vector3.Distance(waypoints[i].position, waypoints[j].position), wallMask))
                 {
                     distGraph[i, j] = (waypoints[i].position - waypoints[j].position).magnitude;
 
@@ -193,6 +193,7 @@ public class MonsterAI : MonoBehaviour
         {
             if (distGraph[currentWp, i] < float.MaxValue)
             {
+                //Debug.Log("added waypoint" + i + " to the candidates of where to go next!");
                 candidates.Add(i);
             }
         }
@@ -317,5 +318,6 @@ public class MonsterAI : MonoBehaviour
         } while (destinationDistFromPlayer < FAR_TELEPORT_THRESH);
 
         this.transform.position = waypoints[wp].position;
+        nextWaypoint = wp;
     }
 }
