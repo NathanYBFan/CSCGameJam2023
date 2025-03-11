@@ -32,7 +32,7 @@ Implimented:
 ## Contributors
 2 Contributor(s):
  Project manager and
- Ai Programmer: Parker (Looking for github user)
+ Ai Programmer: [Cpt-Baker](https://github.com/Cpt-Baker)
 
 ## Other Notees:
 - 100% made in unity
