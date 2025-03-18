@@ -31,7 +31,7 @@ Implimented:
 
 ## Contributors
 2 Contributor(s):
- Project manager and
+ Project manager and Programmer: [Nathan Yong Bin Fan](https://github.com/NathanYBFan)
  Ai Programmer: [Cpt-Baker](https://github.com/Cpt-Baker)
 
 ## Other Notees:
